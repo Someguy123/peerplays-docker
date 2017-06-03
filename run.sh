@@ -114,7 +114,7 @@ replay() {
     echo "Removing old container"
     docker rm $DOCKER_NAME
     echo "Running peerplays with replay..."
-    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays peerplaysd --replay
+    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays witness_node --replay
     echo "Started."
 }
 
