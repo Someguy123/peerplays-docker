@@ -14,7 +14,7 @@ EXPOSE 9777
 EXPOSE 5000
 EXPOSE 8090
 
-ARG peerplaysd_version=v0.1.2
+ARG peerplaysd_version=0.1.6
 
 RUN cd ~ && \
 	git clone https://github.com/pbsa/peerplays.git && \
