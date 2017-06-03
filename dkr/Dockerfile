@@ -28,4 +28,4 @@ VOLUME /peerplays
 WORKDIR /peerplays
 
 RUN echo "Please configure me! You need to mount a data directory onto /peerplays of this container to it to function correctly. (if you're using Peerplays-in-a-box most of this is handled automatically)"
-CMD ["sh", "-c", "/usr/local/bin/peerplaysd"]
+CMD ["sh", "-c", "/usr/local/bin/witness_node"]
