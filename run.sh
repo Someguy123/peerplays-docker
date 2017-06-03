@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Steem node manager
+# Peerplays node manager
 # Released under GNU AGPL by Someguy123
 #
 
@@ -20,7 +20,7 @@ WHITE="$(tput setaf 7)"
 RESET="$(tput sgr0)"
 
 # default. override in .env
-PORTS="2001"
+PORTS="9777"
 
 if [[ -f .env ]]; then
     source .env
@@ -47,44 +47,38 @@ help() {
     echo "Usage: $0 COMMAND [DATA]"
     echo
     echo "Commands: "
-    echo "    start - starts steem container"
-    echo "    replay - starts steem container (in replay mode)"
+    echo "    start - starts peerplays container"
+    echo "    replay - starts peerplays container (in replay mode)"
     echo "    shm_size - resizes /dev/shm to size given, e.g. ./run.sh shm_size 10G "
-    echo "    stop - stops steem container"
-    echo "    status - show status of steem container"
-    echo "    restart - restarts steem container"
+    echo "    stop - stops peerplays container"
+    echo "    status - show status of peerplays container"
+    echo "    restart - restarts peerplays container"
     echo "    install - pulls latest docker image from server (no compiling)"
-    echo "    rebuild - builds steem container (from docker file), and then restarts it"
-    echo "    build - only builds steem container (from docker file)"
-    echo "    logs - show all logs inc. docker logs, and steem logs"
+    echo "    rebuild - builds peerplays container (from docker file), and then restarts it"
+    echo "    build - only builds peerplays container (from docker file)"
+    echo "    logs - show all logs inc. docker logs, and peerplays logs"
     echo "    wallet - open cli_wallet in the container"
     echo "    enter - enter a bash session in the container"
     echo
     exit
 }
 
-optimize() {
-    echo    75 | sudo tee /proc/sys/vm/dirty_background_ratio
-    echo  1000 | sudo tee /proc/sys/vm/dirty_expire_centisecs
-    echo    80 | sudo tee /proc/sys/vm/dirty_ratio
-    echo 30000 | sudo tee /proc/sys/vm/dirty_writeback_centisecs
-}
 
 build() {
     echo $GREEN"Building docker container"$RESET
     cd $DOCKER_DIR
-    docker build -t steem .
+    docker build -t peerplays .
 }
 
 install() {
-    # step 1, get rid of old steem
-    echo "Stopping and removing any existing steem containers"
-    docker stop steem
-    docker rm steem
-    echo "Loading image from someguy123/steem"
-    docker pull someguy123/steem
-    echo "Tagging as steem"
-    docker tag someguy123/steem steem
+    # step 1, get rid of old peerplays
+    echo "Stopping and removing any existing peerplays containers"
+    docker stop peerplays
+    docker rm peerplays
+    echo "Loading image from someguy123/peerplays"
+    docker pull someguy123/peerplays
+    echo "Tagging as peerplays"
+    docker tag someguy123/peerplays peerplays
     echo "Installation completed. You may now configure or run the server"
 }
 
@@ -112,15 +106,15 @@ start() {
     if [[ $? == 0 ]]; then
         docker start $DOCKER_NAME
     else
-        docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/steem -d --name $DOCKER_NAME -t steem
+        docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays
     fi
 }
 
 replay() {
     echo "Removing old container"
     docker rm $DOCKER_NAME
-    echo "Running steem with replay..."
-    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/steem -d --name $DOCKER_NAME -t steem steemd --replay
+    echo "Running peerplays with replay..."
+    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays peerplaysd --replay
     echo "Started."
 }
 
