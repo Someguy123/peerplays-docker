@@ -1,20 +1,20 @@
 # Endpoint for P2P node to listen on
 # COMMENT OUT FOR WITNESSES
-p2p-endpoint = 0.0.0.0:9777
+p2p-endpoint = 0.0.0.0:7777
 
 
 # P2P nodes to connect to on startup (may specify multiple times)
 # seed-node = 
-seed-node = 213.184.225.234:59500           # official peerplays
-seed-node = peerplays-seed.privex.io:9777   # @someguy123/@privex (DE)
-seed-node = 51.15.66.71:9777                # @nuevax (HK)
-seed-node = 188.166.7.226:9777              # @verbaltech2 (NL)
-seed-node = 31.171.244.121:9777             # @taco (CH)
-seed-node = ppy2t.blckchnd.com:9777         # @blckchnd (DE)  
-seed-node = peerplays.roelandp.nl:9777      # @roelandp (CA)
-seed-node = peerplays-seed.altcap.io:9777   # @iPerky (NL)
-seed-node = 51.15.35.96:9777                # @lafona  (NL)
-seed-node = seed.peerplaysnodes.com:9777    # @wackou (NL)
+seed-node = peerplays-seed.privex.io:7777   # @someguy123/@privex (DE)
+seed-node = ppy.blckchnd.com:6112           # blckchnd
+seed-node = 5.9.18.213:18828                # pfunk
+seed-node = 31.171.244.121:7777             # taconator
+seed-node = seed.peerplaysdb.com:9777       # jesta
+seed-node = ppy.esteem.ws:7777              # good-karma
+seed-node = peerplays.roelandp.nl:9777      # roelandp
+seed-node = ppy-seed.xeldal.com:19777       # xeldal
+seed-node = 51.15.42.228:61388              # iPerky
+seed-node = seed.peerplaysnodes.com:9777    # wackou
 
 # JSON array of P2P nodes to connect to on startup
 # seed-nodes = 
