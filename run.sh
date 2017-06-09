@@ -74,7 +74,6 @@ install() {
     # step 1, get rid of old peerplays
     echo "Stopping and removing any existing peerplays containers"
     docker stop peerplays
-    docker rm peerplays
     echo "Loading image from someguy123/peerplays"
     docker pull someguy123/peerplays
     echo "Tagging as peerplays"
@@ -126,6 +125,7 @@ shm_size() {
 stop() {
     echo $RED"Stopping container..."$RESET
     docker stop $DOCKER_NAME
+    docker rm $DOCKER_NAME
 }
 
 enter() {
