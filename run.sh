@@ -7,7 +7,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOCKER_DIR="$DIR/dkr"
 DATADIR="$DIR/data"
-DOCKER_NAME="peerplays"
+DOCKER_NAME="peerplays_testnet"
+# to install from dockerhub, or to build
+IMAGE_NAME="peerplaystest"
 
 BOLD="$(tput bold)"
 RED="$(tput setaf 1)"
@@ -67,17 +69,17 @@ help() {
 build() {
     echo $GREEN"Building docker container"$RESET
     cd $DOCKER_DIR
-    docker build -t peerplays .
+    docker build -t $IMAGE_NAME .
 }
 
 install() {
     # step 1, get rid of old peerplays
     echo "Stopping and removing any existing peerplays containers"
-    docker stop peerplays
+    docker stop $DOCKER_NAME
     echo "Loading image from someguy123/peerplays"
-    docker pull someguy123/peerplays
+    docker pull "someguy123/"$IMAGE_NAME
     echo "Tagging as peerplays"
-    docker tag someguy123/peerplays peerplays
+    docker tag "someguy123/"$IMAGE_NAME $IMAGE_NAME
     echo "Installation completed. You may now configure or run the server"
 }
 
@@ -105,7 +107,7 @@ start() {
     if [[ $? == 0 ]]; then
         docker start $DOCKER_NAME
     else
-        docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays
+        docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t $IMAGE_NAME
     fi
 }
 
@@ -113,7 +115,7 @@ replay() {
     echo "Removing old container"
     docker rm $DOCKER_NAME
     echo "Running peerplays with replay..."
-    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays witness_node --replay
+    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t $IMAGE_NAME witness_node --replay
     echo "Started."
 }
 

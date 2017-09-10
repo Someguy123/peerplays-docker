@@ -14,10 +14,10 @@ EXPOSE 7777
 EXPOSE 5000
 EXPOSE 8090
 
-ARG peerplaysd_version=0.1.8
+ARG peerplaysd_version=testnet-draft
 
 RUN cd ~ && \
-	git clone https://github.com/pbsa/peerplays.git && \
+	git clone https://github.com/ppytest/peerplays.git && \
 	cd peerplays && \
 	git checkout ${peerplaysd_version} && \
 	git submodule update --init --recursive && \
