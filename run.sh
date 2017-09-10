@@ -32,14 +32,10 @@ if [[ ! -f data/witness_node_data_dir/config.ini ]]; then
 fi
 
 IFS=","
-DPORTS=""
+DPORTS=()
 for i in $PORTS; do
     if [[ $i != "" ]]; then
-         if [[ $DPORTS == "" ]]; then
-            DPORTS="-p0.0.0.0:$i:$i"
-        else
-            DPORTS="$DPORTS -p0.0.0.0:$i:$i"
-        fi
+            DPORTS+=("-p0.0.0.0:$i:$i")
     fi
 done
 
@@ -105,7 +101,7 @@ start() {
     if [[ $? == 0 ]]; then
         docker start $DOCKER_NAME
     else
-        docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays
+        docker run ${DPORTS[@]} -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays
     fi
 }
 
@@ -113,7 +109,7 @@ replay() {
     echo "Removing old container"
     docker rm $DOCKER_NAME
     echo "Running peerplays with replay..."
-    docker run $DPORTS -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays witness_node --replay
+    docker run ${DPORTS[@]} -v /dev/shm:/shm -v "$DATADIR":/peerplays -d --name $DOCKER_NAME -t peerplays witness_node --replay
     echo "Started."
 }
 
